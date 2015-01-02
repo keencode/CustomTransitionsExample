@@ -36,8 +36,8 @@ class CustomPresentationAnimationController: NSObject, UIViewControllerAnimatedT
     let defaultBackgroundInsets = UIEdgeInsetsMake(140, 60, 140, 60)
     let targetBackgroundInsets = UIEdgeInsetsMake(-20, -20, 0, -20)
     
-    let defaultTitleTopConst: CGFloat = 125.0
-    let targetTitleTopConst: CGFloat = 25.0
+    let defaultTitleInsets = UIEdgeInsetsMake(125, 14, 0, 14)
+    let targetTitleInsets = UIEdgeInsetsMake(30, 14, 0, 14)
     
     let defaultTitleFontSize: CGFloat = 12.0
     let targetTitleFontSize: CGFloat = 19.0
@@ -64,17 +64,16 @@ class CustomPresentationAnimationController: NSObject, UIViewControllerAnimatedT
         secondViewController.backgroundTrailingConstraint.constant = targetBackgroundInsets.right
         secondViewController.scrollViewTopConstraint.constant = 0.0
         
-        secondViewController.titleLabel.font = UIFont.boldSystemFontOfSize(targetTitleFontSize)
-        secondViewController.subtitleLabel.font = UIFont.systemFontOfSize(targetSubtitleFontSize)
-        secondViewController.titleSubtitleConstraint.constant = targetTitleSubtitleConst
-        secondViewController.titleTopConstraint.constant = targetTitleTopConst
+        secondViewController.titleTopConstraint.constant = targetTitleInsets.top
+        secondViewController.titleLeadingConstraint.constant = targetTitleInsets.left
+        secondViewController.titleTrailingConstraint.constant = targetTitleInsets.right
         
         secondViewController.backgroundImageView.alpha = 0.0
         
         UIView.animateWithDuration(self.duration,
             delay: 0.0,
-            usingSpringWithDamping: 0.85,
-            initialSpringVelocity: 7.0,
+            usingSpringWithDamping: 0.9,
+            initialSpringVelocity: 0.5,
             options: .AllowUserInteraction,
             animations: {
                 presentedControllerView.layoutIfNeeded();
@@ -83,6 +82,23 @@ class CustomPresentationAnimationController: NSObject, UIViewControllerAnimatedT
                 secondViewController.closeButton.hidden = false
                 transitionContext.completeTransition(completed)
         })
+        
+        let startScale: CGFloat = 0.5
+        let endScale: CGFloat = 2.0
+        secondViewController.titleLabel.font = UIFont.boldSystemFontOfSize(targetTitleFontSize)
+        secondViewController.titleLabel.transform = CGAffineTransformScale(secondViewController.titleLabel.transform, startScale, startScale);
+        secondViewController.subtitleLabel.font = UIFont.systemFontOfSize(targetSubtitleFontSize)
+        secondViewController.subtitleLabel.transform = CGAffineTransformScale(secondViewController.subtitleLabel.transform, startScale, startScale);
+        
+        UIView.animateWithDuration(self.duration,
+            delay: 0.0,
+            options: .CurveEaseInOut,
+            animations: {
+                secondViewController.titleLabel.transform = CGAffineTransformScale(secondViewController.titleLabel.transform, endScale, endScale);
+                secondViewController.subtitleLabel.transform = CGAffineTransformScale(secondViewController.subtitleLabel.transform, endScale, endScale);
+            },
+            completion: {(completed: Bool) -> Void in
+        });
     }
     
     func animateDismissalWithTransitionContext(transitionContext: UIViewControllerContextTransitioning) {
@@ -100,24 +116,43 @@ class CustomPresentationAnimationController: NSObject, UIViewControllerAnimatedT
         secondViewController.backgroundTrailingConstraint.constant = defaultBackgroundInsets.right
         secondViewController.scrollViewTopConstraint.constant = containerView.bounds.size.height
         
-//        secondViewController.titleLabel.font = UIFont.boldSystemFontOfSize(defaultTitleFontSize)
-//        secondViewController.subtitleLabel.font = UIFont.systemFontOfSize(defaultSubtitleFontSize)
-//        secondViewController.titleSubtitleConstraint.constant = defaultTitleSubtitleConst
-        secondViewController.titleTopConstraint.constant = defaultTitleTopConst
+        secondViewController.titleTopConstraint.constant = defaultTitleInsets.top
+        secondViewController.titleLeadingConstraint.constant = defaultTitleInsets.left
+        secondViewController.titleTrailingConstraint.constant = defaultTitleInsets.right
         
         secondViewController.backgroundImageView.alpha = 1.0
         
-        // Animate the presented view off the bottom of the view
-        UIView.animateWithDuration(1.5,
+        let startScale: CGFloat = 0.9
+        let endScale: CGFloat = 0.6
+        secondViewController.titleLabel.transform = CGAffineTransformScale(secondViewController.titleLabel.transform, startScale, startScale);
+        secondViewController.subtitleLabel.transform = CGAffineTransformScale(secondViewController.subtitleLabel.transform, startScale, startScale);
+        
+        UIView.animateWithDuration(3.0,
             delay: 0.0,
-            usingSpringWithDamping: 0.9,
-            initialSpringVelocity: 7.0,
-            options: .AllowUserInteraction,
+            usingSpringWithDamping: 0.8,
+            initialSpringVelocity: 0.5,
+            options: .CurveLinear,
             animations: {
+                secondViewController.titleLabel.transform = CGAffineTransformScale(secondViewController.titleLabel.transform, endScale, endScale);
+                secondViewController.subtitleLabel.transform = CGAffineTransformScale(secondViewController.subtitleLabel.transform, endScale, endScale);
+                secondViewController.titleView.layoutIfNeeded();
                 presentedControllerView.layoutIfNeeded();
             },
             completion: {(completed: Bool) -> Void in
+                secondViewController.titleLabel.font = UIFont.boldSystemFontOfSize(self.defaultTitleFontSize)
+                secondViewController.subtitleLabel.font = UIFont.systemFontOfSize(self.defaultSubtitleFontSize)
                 transitionContext.completeTransition(completed)
         })
+
+        
+//        UIView.animateWithDuration(5,
+//            delay: 0.0,
+//            options: .CurveLinear,
+//            animations: {
+//                secondViewController.titleLabel.transform = CGAffineTransformScale(secondViewController.titleLabel.transform, endScale, endScale);
+//                secondViewController.subtitleLabel.transform = CGAffineTransformScale(secondViewController.subtitleLabel.transform, endScale, endScale);
+//            },
+//            completion: {(completed: Bool) -> Void in
+//        });
     }
 }

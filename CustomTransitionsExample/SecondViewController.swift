@@ -18,8 +18,11 @@ class SecondViewController: UIViewController, UIViewControllerTransitioningDeleg
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
+    @IBOutlet weak var titleView: UIView!
     @IBOutlet weak var titleSubtitleConstraint: NSLayoutConstraint!
     @IBOutlet weak var titleTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var titleLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var titleTrailingConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var scrollViewTopConstraint: NSLayoutConstraint!
@@ -49,8 +52,10 @@ class SecondViewController: UIViewController, UIViewControllerTransitioningDeleg
         
         self.closeButton.hidden = true;
         
-        self.scrollView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0)
+//        self.titleLabel.adjustsFontSizeToFitWidth = true
+//        self.subtitleLabel.adjustsFontSizeToFitWidth = true
         
+        self.scrollView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0)
         var bounds = UIScreen.mainScreen().bounds
         self.scrollView.contentSize = CGSizeMake(bounds.size.width, 1500)
         
