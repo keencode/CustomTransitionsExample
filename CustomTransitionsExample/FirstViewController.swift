@@ -9,8 +9,21 @@
 import UIKit
 
 class FirstViewController: UIViewController {
-    @IBOutlet weak var button: UIButton!
+    @IBOutlet weak var backgroundView: UIView!
+    @IBOutlet weak var backgroundTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var backgroundLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var backgroundTrailingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var backgroundBottomConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var button: UIButton!
+//    @IBOutlet weak var titleLabel: UILabel!
+//    @IBOutlet weak var subtitleLabel: UILabel!
+    @IBOutlet weak var titleImageView: UIImageView!
+//    @IBOutlet weak var titleSubtitleConstraint: NSLayoutConstraint!
+    @IBOutlet weak var titleTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var titleWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var titleHeightConstraint: NSLayoutConstraint!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -24,5 +37,13 @@ class FirstViewController: UIViewController {
     @IBAction func dismiss(segue: UIStoryboardSegue) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
+    
+//    func titleViewAsImage() -> UIImage {
+//        UIGraphicsBeginImageContextWithOptions(self.titleView.bounds.size, view.opaque, 0.0)
+//        self.titleView.layer.renderInContext(UIGraphicsGetCurrentContext())
+//        let img = UIGraphicsGetImageFromCurrentImageContext();
+//        UIGraphicsEndImageContext();
+//        return img;
+//    }
 }
 

@@ -11,13 +11,38 @@ import UIKit
 class CustomPresentationController: UIPresentationController {
    
     override func presentationTransitionWillBegin() {
+//        let firstViewController = self.presentingViewController as FirstViewController
+//        let image = firstViewController.titleViewAsImage()
+//        
+//        let secondViewController = self.presentedViewController as SecondViewController
+//        secondViewController.titleImageView = UIImageView(image: image)
+//        secondViewController.titleImageView?.backgroundColor = UIColor.clearColor()
+//        secondViewController.view.insertSubview(secondViewController.titleImageView!,
+//            belowSubview: secondViewController.closeButton)
+//        
+//        let centerXConstraint = NSLayoutConstraint(item: secondViewController.titleImageView!,
+//            attribute: NSLayoutAttribute.CenterX,
+//            relatedBy: NSLayoutRelation.Equal,
+//            toItem: secondViewController.view,
+//            attribute: NSLayoutAttribute.CenterX,
+//            multiplier: 1.0,
+//            constant: 0.0)
+//        
+//        let centerYConstraint = NSLayoutConstraint(item: secondViewController.titleImageView!,
+//            attribute: NSLayoutAttribute.CenterY,
+//            relatedBy: NSLayoutRelation.Equal,
+//            toItem: secondViewController.view,
+//            attribute: NSLayoutAttribute.CenterY,
+//            multiplier: 1.0,
+//            constant: 0.0)
+//        
+//        secondViewController.view .addConstraints([centerXConstraint, centerYConstraint])
+        
         self.containerView.addSubview(self.presentedView())
         
         if let transitionCoordinator = self.presentingViewController.transitionCoordinator() {
             transitionCoordinator.animateAlongsideTransition(
                 {(context: UIViewControllerTransitionCoordinatorContext!) -> Void in
-//                var fromViewController = context.viewControllerForKey(UITransitionContextFromViewControllerKey)
-//                println("fromViewController:\(fromViewController)")
                 },
                 completion:nil)
         }

@@ -36,18 +36,6 @@ class CustomPresentationAnimationController: NSObject, UIViewControllerAnimatedT
     let defaultBackgroundInsets = UIEdgeInsetsMake(140, 60, 140, 60)
     let targetBackgroundInsets = UIEdgeInsetsMake(-20, -20, 0, -20)
     
-    let defaultTitleInsets = UIEdgeInsetsMake(125, 14, 0, 14)
-    let targetTitleInsets = UIEdgeInsetsMake(30, 14, 0, 14)
-    
-    let defaultTitleFontSize: CGFloat = 12.0
-    let targetTitleFontSize: CGFloat = 19.0
-    
-    let defaultSubtitleFontSize: CGFloat = 11.0
-    let targetSubtitleFontSize: CGFloat = 18.0
-
-    let defaultTitleSubtitleConst: CGFloat = 10.0
-    let targetTitleSubtitleConst: CGFloat = 20.0
-    
     func animatePresentationWithTransitionContext(transitionContext: UIViewControllerContextTransitioning) {
         let presentedController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)!
         let presentedControllerView = transitionContext.viewForKey(UITransitionContextToViewKey)!
@@ -58,17 +46,18 @@ class CustomPresentationAnimationController: NSObject, UIViewControllerAnimatedT
         presentedControllerView.layoutIfNeeded()
         
         let secondViewController = presentedController as SecondViewController
-        secondViewController.backgroundTopConstraint.constant = targetBackgroundInsets.top
-        secondViewController.backgroundLeadingConstraint.constant = targetBackgroundInsets.left
-        secondViewController.backgroundBottomConstraint.constant = targetBackgroundInsets.bottom
-        secondViewController.backgroundTrailingConstraint.constant = targetBackgroundInsets.right
         secondViewController.scrollViewTopConstraint.constant = 0.0
-        
-        secondViewController.titleTopConstraint.constant = targetTitleInsets.top
-        secondViewController.titleLeadingConstraint.constant = targetTitleInsets.left
-        secondViewController.titleTrailingConstraint.constant = targetTitleInsets.right
-        
-        secondViewController.backgroundImageView.alpha = 0.0
+
+        let presentingController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)!
+        let firstViewController = presentingController as FirstViewController
+        firstViewController.backgroundTopConstraint.constant = targetBackgroundInsets.top
+        firstViewController.backgroundLeadingConstraint.constant = targetBackgroundInsets.left
+        firstViewController.backgroundBottomConstraint.constant = targetBackgroundInsets.bottom
+        firstViewController.backgroundTrailingConstraint.constant = targetBackgroundInsets.right
+        firstViewController.titleTopConstraint.constant = 30
+        firstViewController.titleWidthConstraint.constant = 300.0
+        firstViewController.titleHeightConstraint.constant = 105.0
+        firstViewController.button.alpha = 0
         
         UIView.animateWithDuration(self.duration,
             delay: 0.0,
@@ -76,29 +65,13 @@ class CustomPresentationAnimationController: NSObject, UIViewControllerAnimatedT
             initialSpringVelocity: 0.5,
             options: .AllowUserInteraction,
             animations: {
+                presentingController.view.layoutIfNeeded()
                 presentedControllerView.layoutIfNeeded();
             },
             completion: {(completed: Bool) -> Void in
                 secondViewController.closeButton.hidden = false
                 transitionContext.completeTransition(completed)
         })
-        
-        let startScale: CGFloat = 0.5
-        let endScale: CGFloat = 2.0
-        secondViewController.titleLabel.font = UIFont.boldSystemFontOfSize(targetTitleFontSize)
-        secondViewController.titleLabel.transform = CGAffineTransformScale(secondViewController.titleLabel.transform, startScale, startScale);
-        secondViewController.subtitleLabel.font = UIFont.systemFontOfSize(targetSubtitleFontSize)
-        secondViewController.subtitleLabel.transform = CGAffineTransformScale(secondViewController.subtitleLabel.transform, startScale, startScale);
-        
-        UIView.animateWithDuration(self.duration,
-            delay: 0.0,
-            options: .CurveEaseInOut,
-            animations: {
-                secondViewController.titleLabel.transform = CGAffineTransformScale(secondViewController.titleLabel.transform, endScale, endScale);
-                secondViewController.subtitleLabel.transform = CGAffineTransformScale(secondViewController.subtitleLabel.transform, endScale, endScale);
-            },
-            completion: {(completed: Bool) -> Void in
-        });
     }
     
     func animateDismissalWithTransitionContext(transitionContext: UIViewControllerContextTransitioning) {
@@ -110,49 +83,30 @@ class CustomPresentationAnimationController: NSObject, UIViewControllerAnimatedT
         let presentedController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)!
         let secondViewController = presentedController as SecondViewController
         secondViewController.closeButton.hidden = true
-        secondViewController.backgroundTopConstraint.constant = defaultBackgroundInsets.top
-        secondViewController.backgroundLeadingConstraint.constant = defaultBackgroundInsets.left
-        secondViewController.backgroundBottomConstraint.constant = defaultBackgroundInsets.bottom
-        secondViewController.backgroundTrailingConstraint.constant = defaultBackgroundInsets.right
         secondViewController.scrollViewTopConstraint.constant = containerView.bounds.size.height
         
-        secondViewController.titleTopConstraint.constant = defaultTitleInsets.top
-        secondViewController.titleLeadingConstraint.constant = defaultTitleInsets.left
-        secondViewController.titleTrailingConstraint.constant = defaultTitleInsets.right
+        let presentingController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)!
+        let firstViewController = presentingController as FirstViewController
+        firstViewController.backgroundTopConstraint.constant = defaultBackgroundInsets.top
+        firstViewController.backgroundLeadingConstraint.constant = defaultBackgroundInsets.left
+        firstViewController.backgroundBottomConstraint.constant = defaultBackgroundInsets.bottom
+        firstViewController.backgroundTrailingConstraint.constant = defaultBackgroundInsets.right
+        firstViewController.titleTopConstraint.constant = 118.0
+        firstViewController.titleWidthConstraint.constant = 208.0
+        firstViewController.titleHeightConstraint.constant = 63.0
+        firstViewController.button.alpha = 1.0
         
-        secondViewController.backgroundImageView.alpha = 1.0
-        
-        let startScale: CGFloat = 0.9
-        let endScale: CGFloat = 0.6
-        secondViewController.titleLabel.transform = CGAffineTransformScale(secondViewController.titleLabel.transform, startScale, startScale);
-        secondViewController.subtitleLabel.transform = CGAffineTransformScale(secondViewController.subtitleLabel.transform, startScale, startScale);
-        
-        UIView.animateWithDuration(3.0,
+        UIView.animateWithDuration(0.7,
             delay: 0.0,
             usingSpringWithDamping: 0.8,
             initialSpringVelocity: 0.5,
             options: .CurveLinear,
             animations: {
-                secondViewController.titleLabel.transform = CGAffineTransformScale(secondViewController.titleLabel.transform, endScale, endScale);
-                secondViewController.subtitleLabel.transform = CGAffineTransformScale(secondViewController.subtitleLabel.transform, endScale, endScale);
-                secondViewController.titleView.layoutIfNeeded();
-                presentedControllerView.layoutIfNeeded();
+                presentingController.view.layoutIfNeeded()
+                presentedControllerView.layoutIfNeeded()
             },
             completion: {(completed: Bool) -> Void in
-                secondViewController.titleLabel.font = UIFont.boldSystemFontOfSize(self.defaultTitleFontSize)
-                secondViewController.subtitleLabel.font = UIFont.systemFontOfSize(self.defaultSubtitleFontSize)
                 transitionContext.completeTransition(completed)
         })
-
-        
-//        UIView.animateWithDuration(5,
-//            delay: 0.0,
-//            options: .CurveLinear,
-//            animations: {
-//                secondViewController.titleLabel.transform = CGAffineTransformScale(secondViewController.titleLabel.transform, endScale, endScale);
-//                secondViewController.subtitleLabel.transform = CGAffineTransformScale(secondViewController.subtitleLabel.transform, endScale, endScale);
-//            },
-//            completion: {(completed: Bool) -> Void in
-//        });
     }
 }

@@ -9,25 +9,11 @@
 import UIKit
 
 class SecondViewController: UIViewController, UIViewControllerTransitioningDelegate, UIScrollViewDelegate {
-    @IBOutlet weak var backgroundView: UIView!
-    @IBOutlet weak var backgroundTopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var backgroundLeadingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var backgroundTrailingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var backgroundBottomConstraint: NSLayoutConstraint!
-    
-    @IBOutlet weak var backgroundImageView: UIImageView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var subtitleLabel: UILabel!
-    @IBOutlet weak var titleView: UIView!
-    @IBOutlet weak var titleSubtitleConstraint: NSLayoutConstraint!
-    @IBOutlet weak var titleTopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var titleLeadingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var titleTrailingConstraint: NSLayoutConstraint!
-    
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var scrollViewTopConstraint: NSLayoutConstraint!
-    
     @IBOutlet weak var closeButton: UIButton!
+    
+    var titleImageView: UIImageView?
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
